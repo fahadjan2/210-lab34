@@ -1,3 +1,5 @@
+// COMSC-210 | Lab 34 | Fahad Fawad Ahmad 
+// IDE used: Visual Studio
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -181,7 +183,7 @@ public:
 };
 
 int main() {
-    int choice;
+    int choice = 1;
     vector<Edge> edges = {
         {0,2,14},{0,1,12},{0,3,4},
         {2,3,6},{1,7,15},{1,5,7},
@@ -197,28 +199,23 @@ int main() {
         cout << "Enter choice: " << endl;
         cin >> choice;
         if (choice == 1) {
-
+            graph.printApplication();  
         } else if (choice == 2) {
-
+            graph.BFS(0);
         } else if (choice == 3) {
-
+            graph.DFS(0);
         } else if (choice == 4) {
-
+            graph.printShortestPathsFrom(0);
         } else if (choice == 5) {
-            
+            graph.MSTPrim();
         }
     }
 
-    graph.printApplication();
-    graph.DFS(0);
-    graph.BFS(0);
-    graph.printShortestPathsFrom(0);
-    graph.MSTPrim();
     return 0;
 }
 
 //Prints menu
 void menu() {
-    cout << "Emergency Response Radio Network Menu:" << endl;
-    cout << "\n[1] Display radio network" << "\n[2] Trace signal propagation (BFS)" << "\n[3] Plan signal inspection route (DFS)" << "\nCalculate shortest paths from a tower" << "\n[5] Calculate minimum spanning tree of network" << "[0] Exit" << endl;
+    cout << "Emergency Response Radio Network Menu:";
+    cout << "\n[1] Display radio network" << "\n[2] Trace signal propagation (BFS)" << "\n[3] Plan signal inspection route (DFS)" << "\n[4] Calculate shortest paths from a tower" << "\n[5] Calculate minimum spanning tree of network" << "\n[0] Exit" << endl;
 }
