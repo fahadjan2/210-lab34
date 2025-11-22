@@ -12,6 +12,8 @@ struct Edge {
 
 typedef pair<int, int> Pair;
 
+void menu();
+
 class Graph {
 public:
     vector<vector<Pair>> adjList;
@@ -179,6 +181,7 @@ public:
 };
 
 int main() {
+    int choice;
     vector<Edge> edges = {
         {0,2,14},{0,1,12},{0,3,4},
         {2,3,6},{1,7,15},{1,5,7},
@@ -189,7 +192,22 @@ int main() {
 
     Graph graph(edges);
 
-    graph.printGraph();
+    while (choice != 0) {
+        menu();
+        cout << "Enter choice: " << endl;
+        cin >> choice;
+        if (choice == 1) {
+
+        } else if (choice == 2) {
+
+        } else if (choice == 3) {
+
+        } else if (choice == 4) {
+
+        } else if (choice == 5) {
+            
+        }
+    }
 
     graph.printApplication();
     graph.DFS(0);
@@ -197,4 +215,10 @@ int main() {
     graph.printShortestPathsFrom(0);
     graph.MSTPrim();
     return 0;
+}
+
+//Prints menu
+void menu() {
+    cout << "Emergency Response Radio Network Menu:" << endl;
+    cout << "\n[1] Display radio network" << "\n[2] Trace signal propagation (BFS)" << "\n[3] Plan signal inspection route (DFS)" << "\nCalculate shortest paths from a tower" << "\n[5] Calculate minimum spanning tree of network" << "[0] Exit" << endl;
 }
