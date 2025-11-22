@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <limits>
 using namespace std;
 
 const int SIZE = 9;
@@ -110,6 +111,42 @@ public:
         }
         cout << endl;
     }
+
+    vector<long long> dijkstra(int start) const {
+        const long long INF = numeric_limits<long long>::max() / 4;
+        vector<long long> dist(SIZE, INF);
+        // min-heap of (distance, vertex)
+        priority_queue<pair<long long,int>, vector<pair<long long,int>>, greater<pair<long long,int>>> pq;
+
+        dist[start] = 0;
+        pq.push({0, start});
+
+        while (!pq.empty()) {
+            auto [d, u] = pq.top(); pq.pop();
+            if (d != dist[u]) continue; // stale entry
+            for (const auto &edge : adjList[u]) {
+                int v = edge.first;
+                long long w = edge.second;
+                if (dist[v] > dist[u] + w) {
+                    dist[v] = dist[u] + w;
+                    pq.push({dist[v], v});
+                }
+            }
+        }
+        return dist;
+    }
+
+    void printShortestPathsFrom(int start) const {
+        auto dist = dijkstra(start);
+        cout << "\nShortest path from node " << start << ":\n";
+        for (int i = 0; i < SIZE; ++i) {
+            cout << start << " -> " << i << " : ";
+            if (dist[i] >= (numeric_limits<long long>::max() / 8)) cout << "INF";
+            else cout << dist[i];
+            cout << "\n";
+        }
+        cout << endl;
+    }
 };
 
 int main() {
@@ -128,8 +165,7 @@ int main() {
     graph.printApplication();
     graph.DFS(0);
     graph.BFS(0);
-
-    cout << endl;
+    graph.printShortestPathsFrom(0);
 
     return 0;
 }
