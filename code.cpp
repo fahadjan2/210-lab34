@@ -25,7 +25,7 @@ public:
             int weight = edge.weight;
 
             adjList[src].push_back(make_pair(dest, weight));
-            adjList[dest].push_back(make_pair(src, weight));  // undirected
+            adjList[dest].push_back(make_pair(src, weight));
         }
     }
 
@@ -39,7 +39,7 @@ public:
         }
     }
 
-    void printApplication() const { // done by LLM
+    void printApplication() const {
         cout << "Emergency Response Radio Network Map\n";
         cout << "=======================================\n\n";
 
@@ -66,7 +66,7 @@ public:
         }
     }
 
-    // ---------------- DFS ---------------- done by LLM
+    // ---------------- DFS ----------------
     void DFSUtil(int v, vector<bool> &visited) const {
         visited[v] = true;
         cout << "Inspecting Tower " << v << endl;
@@ -77,7 +77,7 @@ public:
         }
     }
 
-     void DFS(int start) const { //done by LLM
+     void DFS(int start) const {
         cout << "\nSignal Path Trace (DFS) starting from Tower " << start << ":\n";
         cout << "Purpose: Trace how emergency signal spreads\n";
         cout << "=======================================\n";
@@ -86,7 +86,7 @@ public:
         cout << endl;
     }
 
-    // ---------------- BFS ---------------- done by LLM
+    // ---------------- BFS ----------------
      void BFS(int start) const {
         cout << "\nCoverage Radius Scan (BFS) starting from Tower " << start << ":\n";
         cout << "Purpose: Identify signal reach by distance\n";
@@ -147,6 +147,35 @@ public:
         }
         cout << endl;
     }
+
+    void MSTPrim(int start=0) {
+        vector<bool> visited(SIZE,false);
+        visited[start] = true;
+        int edgesUsed = 0;
+
+        cout << "Minimum Spanning Tree edges:\n";
+
+        while(edgesUsed < SIZE-1){
+            int minWeight = numeric_limits<int>::max();
+            int u = -1, v = -1;
+            for(int i=0;i<SIZE;i++){
+                if(!visited[i]) continue;
+                for(auto &p: adjList[i]){
+                    if(!visited[p.first] && p.second < minWeight){
+                        minWeight = p.second;
+                        u = i;
+                        v = p.first;
+                    }
+                }
+            }
+            if(u != -1 && v != -1){
+                cout << "Edge from " << u << " to " << v 
+                     << " with capacity: " << minWeight << " units\n";
+                visited[v] = true;
+                edgesUsed++;
+            } else break;
+        }
+    }
 };
 
 int main() {
@@ -166,6 +195,6 @@ int main() {
     graph.DFS(0);
     graph.BFS(0);
     graph.printShortestPathsFrom(0);
-
+    graph.MSTPrim();
     return 0;
 }
